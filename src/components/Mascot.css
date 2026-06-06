@@ -1,0 +1,255 @@
+/* ============================================================
+   Mascot — YACK placeholder
+   Magenta-only family (no blue mixing). Mobile-first. px.
+   ============================================================ */
+
+.mascot {
+  --orb-size: 240px;
+  position: relative;
+  width: var(--orb-size);
+  height: var(--orb-size);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  font-family: var(--font);
+}
+
+.mascot--hero {
+  --orb-size: 240px;
+}
+
+.mascot--card {
+  --orb-size: 180px;
+}
+
+.mascot--spot {
+  --orb-size: 72px;
+}
+
+@media (min-width: 720px) {
+  .mascot--hero {
+    --orb-size: 320px;
+  }
+  .mascot--card {
+    --orb-size: 200px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .mascot--hero {
+    --orb-size: 420px;
+  }
+  .mascot--card {
+    --orb-size: 220px;
+  }
+}
+
+.mascot-halo {
+  position: absolute;
+  inset: -22%;
+  border-radius: 50%;
+  background:
+    radial-gradient(closest-side, rgba(231, 15, 71, 0.4), transparent 72%),
+    radial-gradient(closest-side, rgba(231, 15, 71, 0.18), transparent 80%);
+  filter: blur(20px);
+  z-index: -1;
+  animation: mascot-breathe 6s var(--ease-out) infinite;
+}
+
+.mascot-orb {
+  position: relative;
+  width: 86%;
+  height: 86%;
+  border-radius: 50%;
+  background:
+    radial-gradient(120% 90% at 30% 20%, #ff6a8b 0%, transparent 55%),
+    var(--grad-magenta);
+  box-shadow:
+    inset 0 -30px 60px rgba(0, 0, 0, 0.18),
+    inset 0 24px 60px rgba(255, 255, 255, 0.18),
+    0 30px 80px -20px rgba(231, 15, 71, 0.55),
+    0 14px 30px -14px rgba(12, 10, 24, 0.4);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.mascot-grain {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+      rgba(255, 255, 255, 0.08) 1px,
+      transparent 1px
+    ),
+    radial-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+  background-size: 5px 5px, 7px 7px;
+  background-position: 0 0, 2px 3px;
+  mix-blend-mode: overlay;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Ears — neutral dark, no blue */
+.mascot-ears {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 18%;
+}
+
+.ear {
+  width: 14%;
+  aspect-ratio: 1 / 1.15;
+  background: radial-gradient(closest-side, #2a1820, #100509);
+  border-radius: 50% 50% 35% 35%;
+  transform: rotate(-12deg);
+  box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.ear--r {
+  transform: rotate(12deg);
+}
+
+.mascot-face {
+  position: absolute;
+  top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22%;
+  place-items: center;
+}
+
+.eye {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #100509;
+  position: relative;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.85);
+}
+
+.eye::after {
+  content: "";
+  position: absolute;
+  top: 18%;
+  right: 18%;
+  width: 30%;
+  height: 30%;
+  background: #fff;
+  border-radius: 50%;
+}
+
+.mascot--card .eye,
+.mascot--spot .eye {
+  width: 10px;
+  height: 10px;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.85);
+}
+
+.snout {
+  position: absolute;
+  top: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36%;
+  display: grid;
+  place-items: center;
+  gap: 4px;
+}
+
+.nose {
+  width: 20px;
+  height: 12px;
+  background: #100509;
+  border-radius: 50% 50% 40% 40%;
+}
+
+.mascot--card .nose,
+.mascot--spot .nose {
+  width: 14px;
+  height: 9px;
+}
+
+.smile {
+  width: 40%;
+  height: 14px;
+  border-bottom: 3px solid #100509;
+  border-radius: 0 0 80% 80%;
+}
+
+.mascot-hoodie {
+  position: absolute;
+  bottom: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(12, 10, 24, 0.92);
+  color: #fff;
+  padding: 10px 20px 8px;
+  border-radius: 999px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  font-size: 16px;
+  box-shadow:
+    0 14px 30px -10px rgba(0, 0, 0, 0.45),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+@media (min-width: 720px) {
+  .mascot-hoodie {
+    padding: 12px 22px 10px;
+    font-size: 18px;
+  }
+}
+
+.mascot-hoodie::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--magenta);
+  box-shadow: 0 0 0 3px rgba(231, 15, 71, 0.25);
+}
+
+.wordmark {
+  font-family: var(--font);
+}
+
+.mascot-tag {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: currentColor;
+  opacity: 0.55;
+  white-space: nowrap;
+}
+
+.mascot--spot .mascot-tag,
+.mascot--card .mascot-tag {
+  display: none;
+}
+
+@keyframes mascot-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}

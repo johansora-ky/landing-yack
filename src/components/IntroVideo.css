@@ -1,0 +1,201 @@
+.intro-video {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 0;
+}
+
+.intro-video__backdrop {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  transition: background 520ms var(--ease-out);
+}
+
+/* ─── Gate: looping BG + CTA ─── */
+.intro-video__gate {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.intro-video__gate-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: opacity 640ms var(--ease-out);
+}
+
+.intro-video__gate-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(12, 10, 24, 0.35) 0%,
+    rgba(12, 10, 24, 0.55) 50%,
+    rgba(12, 10, 24, 0.65) 100%
+  );
+  transition: opacity 640ms var(--ease-out);
+}
+
+.intro-video__gate-content {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  transition: opacity 640ms var(--ease-out);
+}
+
+.intro-video__gate-logo {
+  width: min(220px, 58vw);
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.35));
+}
+
+.intro-video__gate-cta {
+  position: relative;
+  appearance: none;
+  border: 2px solid rgba(255, 255, 255, 0.85);
+  background: rgba(231, 15, 71, 0.88);
+  color: #fff;
+  padding: 18px 28px;
+  border-radius: 999px;
+  font-family: var(--font);
+  font-size: clamp(15px, 3.8vw, 18px);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  line-height: 1.35;
+  text-align: center;
+  max-width: min(420px, calc(100% - 32px));
+  cursor: pointer;
+  box-shadow:
+    0 20px 50px -20px rgba(231, 15, 71, 0.65),
+    0 0 0 0 rgba(255, 255, 255, 0.2);
+  transition:
+    transform 280ms var(--ease-out),
+    opacity 640ms var(--ease-out),
+    background 220ms var(--ease-out),
+    box-shadow 280ms var(--ease-out);
+}
+
+.intro-video__gate-cta strong {
+  font-weight: 800;
+  font-style: italic;
+}
+
+.intro-video__gate-cta:hover:not(:disabled),
+.intro-video__gate-cta:focus-visible:not(:disabled) {
+  transform: scale(1.04);
+  background: rgba(231, 15, 71, 0.96);
+  box-shadow:
+    0 24px 56px -18px rgba(231, 15, 71, 0.75),
+    0 0 0 6px rgba(255, 255, 255, 0.12);
+}
+
+.intro-video__gate-cta:disabled {
+  cursor: default;
+}
+
+.intro-video--gate-exiting .intro-video__gate-bg,
+.intro-video--gate-exiting .intro-video__gate-scrim,
+.intro-video--gate-exiting .intro-video__gate-content {
+  opacity: 0;
+}
+
+.intro-video--gate-exiting .intro-video__gate-cta {
+  transform: scale(0.96);
+}
+
+.intro-video--exiting .intro-video__backdrop {
+  background: #e70f47;
+}
+
+.intro-video--exiting .intro-video__media {
+  opacity: 0;
+  transition: opacity 380ms var(--ease-out);
+}
+
+.intro-video__frame {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  animation: intro-main-in 480ms var(--ease-out) both;
+}
+
+@keyframes intro-main-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.intro-video__media {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: #000;
+}
+
+.intro-video__play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(320px, calc(100% - 48px));
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 28px 24px;
+  border: 0;
+  border-radius: 20px;
+  background: rgba(12, 10, 24, 0.82);
+  backdrop-filter: blur(12px);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+  transition:
+    transform 220ms var(--ease-out),
+    background 220ms var(--ease-out);
+}
+
+.intro-video__play:hover,
+.intro-video__play:focus-visible {
+  background: rgba(12, 10, 24, 0.92);
+  transform: scale(1.02);
+}
+
+.intro-video__play-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: var(--grad-magenta);
+  font-size: 22px;
+  line-height: 1;
+  padding-left: 4px;
+  box-shadow: var(--shadow-magenta);
+}

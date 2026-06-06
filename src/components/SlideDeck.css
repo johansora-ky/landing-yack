@@ -1,0 +1,396 @@
+/* ============================================================
+   SlideDeck — fullscreen fade-only deck
+   Mobile-first. All px. Indicator: dots; hover/focus reveals label.
+   ============================================================ */
+
+.deck {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ink);
+}
+
+.deck-stage {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.deck-slide {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--slide-fade) var(--ease-out),
+    visibility 0s linear var(--slide-fade);
+  pointer-events: none;
+  will-change: opacity;
+  /* Inactive slides never scroll. */
+  overflow: hidden;
+}
+
+.deck-slide[data-active="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transition:
+    opacity var(--slide-fade) var(--ease-out),
+    visibility 0s linear 0s;
+  /* Active slide owns the scroll. Body stays locked so only this scrolls,
+     and overscroll-behavior:contain prevents accidental rubber-band/parent
+     scroll on touch devices. */
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.deck-slide[data-active="true"]::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* ─── Top bar ─────────────────────────────────────────────── */
+.deck-topbar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  pointer-events: none;
+}
+
+.deck-topbar>* {
+  pointer-events: auto;
+}
+
+.deck-logo {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 5px 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(12, 10, 24, 0.06);
+  box-shadow:
+    0 8px 22px -10px rgba(12, 10, 24, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  transition:
+    transform 220ms var(--ease-out),
+    box-shadow 220ms var(--ease-out);
+}
+
+.deck-logo:hover,
+.deck-logo:focus-visible {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 28px -10px rgba(0, 77, 255, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.deck-topbar[data-scheme="dark"] .deck-logo {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 10px 26px -12px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.deck-logo img {
+  height: 24px;
+  width: auto;
+  display: block;
+}
+
+.deck-counter {
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: inherit;
+  opacity: 0.75;
+}
+
+.deck-topbar__actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.deck-replay {
+  appearance: none;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-family: var(--font);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 0.85;
+  transition:
+    opacity 220ms var(--ease-out),
+    background 220ms var(--ease-out),
+    transform 220ms var(--ease-out);
+}
+
+.deck-replay:hover,
+.deck-replay:focus-visible {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
+}
+
+.deck-replay__icon {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--magenta);
+  color: #fff;
+  font-size: 8px;
+  line-height: 1;
+  padding-left: 1px;
+  transition: background 220ms var(--ease-out);
+}
+
+.deck-topbar[data-scheme="dark"] .deck-replay__icon {
+  background: var(--blue-electric);
+}
+
+.deck-topbar[data-scheme="light"] .deck-replay__icon {
+  background: var(--magenta);
+}
+
+.deck-replay__label {
+  display: none;
+}
+
+.deck[data-intro-blocking="true"] .deck-indicator,
+.deck[data-intro-blocking="true"] .deck-hint,
+.deck[data-intro-blocking="true"] .deck-topbar {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.deck-counter::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: currentColor;
+}
+
+@media (min-width: 720px) {
+  .deck-topbar {
+    padding: 22px 32px;
+  }
+
+  .deck-logo {
+    height: 40px;
+    padding: 6px 14px;
+    border-radius: 14px;
+  }
+
+  .deck-logo img {
+    height: 28px;
+  }
+
+  .deck-counter {
+    font-size: 13px;
+  }
+
+  .deck-replay {
+    font-size: 12px;
+    padding: 8px 14px;
+  }
+
+  .deck-replay__label {
+    display: inline;
+  }
+}
+
+@media (min-width: 1100px) {
+  .deck-topbar {
+    padding: 26px 56px;
+  }
+}
+
+/* ─── Side rail indicator (dots) ──────────────────────────── */
+.deck-indicator {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+}
+
+.deck-indicator button {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  padding: 8px 6px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: inherit;
+  position: relative;
+}
+
+.deck-indicator .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.4;
+  transition:
+    opacity 220ms var(--ease-out),
+    transform 220ms var(--ease-out),
+    background 220ms var(--ease-out);
+}
+
+.deck-indicator button:hover .dot,
+.deck-indicator button:focus-visible .dot {
+  opacity: 0.85;
+  transform: scale(1.25);
+}
+
+.deck-indicator button[aria-current="true"] .dot {
+  width: 10px;
+  height: 10px;
+  opacity: 1;
+  background: var(--magenta);
+  box-shadow: 0 0 0 4px rgba(231, 15, 71, 0.18);
+}
+
+.deck-indicator[data-scheme="dark"] button[aria-current="true"] .dot {
+  background: var(--blue-electric);
+  box-shadow: 0 0 0 4px rgba(0, 77, 255, 0.22);
+}
+
+.deck-indicator[data-scheme="light"] button[aria-current="true"] .dot {
+  background: var(--magenta);
+  box-shadow: 0 0 0 4px rgba(231, 15, 71, 0.18);
+}
+
+/* Label = hover/focus tooltip beside the dot */
+.deck-indicator .label {
+  position: absolute;
+  right: calc(100% + 6px);
+  top: 50%;
+  transform: translateY(-50%) translateX(8px);
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 200ms var(--ease-out),
+    transform 200ms var(--ease-out);
+  box-shadow: var(--shadow-soft);
+}
+
+.deck-indicator .label::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border: 5px solid transparent;
+  border-left-color: var(--ink);
+}
+
+.deck-indicator button:hover .label,
+.deck-indicator button:focus-visible .label,
+.deck-indicator button[aria-current="true"] .label {
+  opacity: 1;
+  transform: translateY(-50%) translateX(0);
+}
+
+@media (min-width: 720px) {
+  .deck-indicator {
+    right: 24px;
+    gap: 14px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .deck-indicator {
+    right: 36px;
+  }
+}
+
+/* ─── Bottom hint ─────────────────────────────────────────── */
+.deck-hint {
+  display: none;
+  position: absolute;
+  bottom: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  pointer-events: none;
+  color: inherit;
+}
+
+.deck-hint .keys {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.deck-hint kbd {
+  font-family: var(--font);
+  font-size: 10px;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  padding: 2px 5px 1px;
+  line-height: 1;
+}
+
+@media (min-width: 720px) {
+  .deck-hint {
+    display: inline-flex;
+  }
+}
