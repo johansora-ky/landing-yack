@@ -28,7 +28,7 @@ export function CtaFinal({ meta, active }: Props) {
 
         <div className="s-inner">
           <span className="final-foot" style={{ alignSelf: "start" }}>
-            06 · Empecemos
+            06 · Próximo paso
           </span>
 
           <div className="final-block">
@@ -36,28 +36,10 @@ export function CtaFinal({ meta, active }: Props) {
               ¿Listo para empezar nuestro camino juntos?
             </h2>
             <p>
-              Descarga la app de KrediYA y descubre cómo puedo ayudarte a manejar
-              tus finanzas con confianza.
+              Nuestro equipo se
+              pondrá en contacto contigo para explorar juntos cómo YACK puede
+              acompañarte y estar presente donde más lo necesites.
             </p>
-            <div className="final-actions">
-              <a
-                href="#"
-                className="cta cta--final-app"
-                onClick={(e) => e.preventDefault()}
-              >
-                Ir a la app
-                <span className="cta-arrow" aria-hidden="true">
-                  →
-                </span>
-              </a>
-              <a
-                href="#"
-                className="cta cta--final-white"
-                onClick={(e) => e.preventDefault()}
-              >
-                Habla con nosotros
-              </a>
-            </div>
           </div>
 
           <span className="final-foot">YACK · Brand Mascot · KrediYA</span>

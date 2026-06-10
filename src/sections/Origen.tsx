@@ -11,7 +11,7 @@ const YACK_RUNNING_SRC =
 const TRAITS = [
   {
     tag: "Identidad LATAM",
-    text: "El felino más representativo del continente — conecto contigo desde nuestras raíces.",
+    text: "El felino más representativo del continente, conecto contigo desde nuestras raíces.",
   },
   {
     tag: "Protección y guía",
@@ -70,21 +70,12 @@ export function Origen({ meta, active }: Props) {
           <header className="origen-copy">
             <span className="eyebrow origen-reveal">02 · Origen</span>
 
-            <ul
-              className="origen-badges origen-reveal"
-              aria-label="Atributos del jaguar"
-            >
-              <li>Latam</li>
-              <li>Felis onca</li>
-              <li>Protección</li>
-            </ul>
-
             <h2 id={`${meta.id}-title`} className="h-section origen-reveal">
               Fuerte, ágil y siempre <em>a tu lado</em>.
             </h2>
 
             <p className="lead origen-reveal">
-              ¿Por qué un jaguar? Es el felino más poderoso de América — un
+              ¿Por qué un jaguar? Es el felino más poderoso de América, un
               símbolo de protección y liderazgo desde nuestras culturas
               precolombinas.
             </p>

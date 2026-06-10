@@ -36,8 +36,10 @@ export function useDeck(): DeckApi {
   return ctx;
 }
 
-const KREDIYACK_LOGO =
-  "https://www.krediya.com/hubfs/Yack/Logo%20KrediYack.png";
+const KREDIYA_LOGO_COLOR =
+  "https://www.krediya.com/hs-fs/hubfs/krdya_new_color_full.png?width=180&height=50&name=krdya_new_color_full.png";
+const KREDIYA_LOGO_WHITE =
+  "https://www.krediya.com/hubfs/sourceweb/Logos_Krdya/KrediYA_White_WEBP.webp?width=180&height=50";
 
 const NAV_LOCK_MS = 600;
 const WHEEL_THRESHOLD = 24;
@@ -304,110 +306,112 @@ export function SlideDeck({ slides, children }: SlideDeckProps) {
   );
 
   const currentScheme = slides[index]?.scheme ?? "light";
+  const logoSrc =
+    currentScheme === "dark" ? KREDIYA_LOGO_WHITE : KREDIYA_LOGO_COLOR;
   const topbarColor = currentScheme === "dark" ? "#fff" : "var(--ink)";
 
   return (
     <DeckContext.Provider value={api}>
-    <main
-      className="deck"
-      data-intro-blocking={introBlocking ? "true" : "false"}
-      aria-roledescription="presentación interactiva"
-    >
-      <IntroVideo
-        open={introBlocking}
-        skipGate={replayIntroOpen && !mandatoryIntroOpen}
-        onComplete={handleIntroComplete}
-      />
-      <span className="sr-only" aria-live="polite">
-        Diapositiva {index + 1} de {total}: {slides[index]?.label}
-      </span>
-
-      <div
-        className="deck-topbar"
-        data-scheme={currentScheme}
-        style={{ color: topbarColor }}
+      <main
+        className="deck"
+        data-intro-blocking={introBlocking ? "true" : "false"}
+        aria-roledescription="presentación interactiva"
       >
-        <a
-          href="#1"
-          className="deck-logo"
-          onClick={(e) => {
-            e.preventDefault();
-            goTo(0);
-          }}
-          aria-label="Inicio · KrediYack"
+        <IntroVideo
+          open={introBlocking}
+          skipGate={replayIntroOpen && !mandatoryIntroOpen}
+          onComplete={handleIntroComplete}
+        />
+        <span className="sr-only" aria-live="polite">
+          Diapositiva {index + 1} de {total}: {slides[index]?.label}
+        </span>
+
+        <div
+          className="deck-topbar"
+          data-scheme={currentScheme}
+          style={{ color: topbarColor }}
         >
-          <img
-            src={KREDIYACK_LOGO}
-            alt="KrediYack"
-            width="148"
-            height="40"
-            loading="eager"
-            decoding="async"
-            fetchPriority="high"
-          />
-        </a>
-        <div className="deck-topbar__actions">
-          {!mandatoryIntroOpen ? (
-            <button
-              type="button"
-              className="deck-replay"
-              onClick={() => setReplayIntroOpen(true)}
-              aria-label="Ver video de presentación"
-            >
-              <span className="deck-replay__icon" aria-hidden="true">
-                ▶
-              </span>
-              <span className="deck-replay__label">Ver video</span>
-            </button>
-          ) : null}
-          <div className="deck-counter" aria-hidden="true">
-            {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+          <a
+            href="#1"
+            className="deck-logo"
+            onClick={(e) => {
+              e.preventDefault();
+              goTo(0);
+            }}
+            aria-label="Inicio · KrediYA"
+          >
+            <img
+              src={logoSrc}
+              alt="KrediYA"
+              width="100"
+              height="28"
+              loading="eager"
+              decoding="async"
+              fetchPriority="high"
+            />
+          </a>
+          <div className="deck-topbar__actions">
+            {!mandatoryIntroOpen ? (
+              <button
+                type="button"
+                className="deck-replay"
+                onClick={() => setReplayIntroOpen(true)}
+                aria-label="Ver video de presentación"
+              >
+                <span className="deck-replay__icon" aria-hidden="true">
+                  ▶
+                </span>
+                <span className="deck-replay__label">Ver video</span>
+              </button>
+            ) : null}
+            <div className="deck-counter" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
+            </div>
           </div>
         </div>
-      </div>
 
-      <div className="deck-stage">
-        {childrenArray.map((child, i) => {
-          const element = child as ReactElement<SlideProps>;
-          return cloneElement(element, {
-            key: slides[i]?.id ?? i,
-            active: i === index,
-          });
-        })}
-      </div>
+        <div className="deck-stage">
+          {childrenArray.map((child, i) => {
+            const element = child as ReactElement<SlideProps>;
+            return cloneElement(element, {
+              key: slides[i]?.id ?? i,
+              active: i === index,
+            });
+          })}
+        </div>
 
-      <ul
-        className="deck-indicator"
-        data-scheme={currentScheme}
-        role="tablist"
-        aria-label="Navegación de secciones"
-        style={{ color: topbarColor }}
-      >
-        {slides.map((slide, i) => (
-          <li key={slide.id}>
-            <button
-              type="button"
-              role="tab"
-              aria-current={i === index ? "true" : undefined}
-              aria-selected={i === index}
-              aria-controls={slide.id}
-              onClick={() => goTo(i)}
-            >
-              <span className="dot" aria-hidden="true" />
-              <span className="label">{slide.label}</span>
-            </button>
-          </li>
-        ))}
-      </ul>
+        <ul
+          className="deck-indicator"
+          data-scheme={currentScheme}
+          role="tablist"
+          aria-label="Navegación de secciones"
+          style={{ color: topbarColor }}
+        >
+          {slides.map((slide, i) => (
+            <li key={slide.id}>
+              <button
+                type="button"
+                role="tab"
+                aria-current={i === index ? "true" : undefined}
+                aria-selected={i === index}
+                aria-controls={slide.id}
+                onClick={() => goTo(i)}
+              >
+                <span className="dot" aria-hidden="true" />
+                <span className="label">{slide.label}</span>
+              </button>
+            </li>
+          ))}
+        </ul>
 
-      <div className="deck-hint" style={{ color: topbarColor }}>
-        <span className="keys">
-          <kbd>↑</kbd>
-          <kbd>↓</kbd>
-        </span>
-        <span>Desliza · Rueda · Flechas</span>
-      </div>
-    </main>
+        <div className="deck-hint" style={{ color: topbarColor }}>
+          <span className="keys">
+            <kbd>↑</kbd>
+            <kbd>↓</kbd>
+          </span>
+          <span>Desliza · Rueda · Flechas</span>
+        </div>
+      </main>
     </DeckContext.Provider>
   );
 }

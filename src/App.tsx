@@ -13,7 +13,7 @@ const SLIDES: SlideMeta[] = [
   { id: "mision", label: "Misión", scheme: "light" },
   { id: "personalidad", label: "Personalidad", scheme: "light" },
   { id: "goodies", label: "Descargables", scheme: "light" },
-  { id: "cta", label: "Empecemos", scheme: "dark" },
+  { id: "cta", label: "Contacto", scheme: "dark" },
 ];
 
 function App() {
