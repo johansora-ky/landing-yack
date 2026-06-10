@@ -6,7 +6,7 @@ type Props = {
 };
 
 const YACK_RUNNING_SRC =
-  "https://www.krediya.com/hubfs/Yack/Yack%20Corriendo.webp";
+  "https://www.krediya.com/hubfs/Yack/Mundial/magnific_using-img1-as-the-primary_8vATJWUIrU.webp";
 
 const TRAITS = [
   {
